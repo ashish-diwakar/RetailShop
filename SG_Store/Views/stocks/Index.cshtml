@@ -1,0 +1,129 @@
+﻿@model IEnumerable<SG_Store.Models.stock>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.quantity_kg)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MRP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.purchase_price)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.is_per_kg_item)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.is_active)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.added_on)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.total_bill_amount)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.sale_discount_percentage)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.sale_price)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.item_code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.item_barcode)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.sold_quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sold_quantity_kg)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.product.product_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.store.store_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.vendor.vendor_name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.quantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.quantity_kg)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MRP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.purchase_price)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.is_per_kg_item)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.is_active)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.added_on)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.total_bill_amount)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.sale_discount_percentage)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.sale_price)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.item_code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.item_barcode)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.sold_quantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sold_quantity_kg)
+        </td>
+        <td>
+            <div class="product_name_div"> @Html.DisplayFor(modelItem => item.product.product_name)</div>
+        </td>
+        <td>
+            <div class="store_name_div">@Html.DisplayFor(modelItem => item.store.store_name)</div>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.vendor.vendor_name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.stock_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.stock_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.stock_id })
+        </td>
+    </tr>
+}
+
+</table>

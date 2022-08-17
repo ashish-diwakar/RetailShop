@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        .store_name_div, .product_name_div {
+            overflow: hidden;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Shree Ganesh Bartan Bhandar", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Brands", "Index", "Brands")</li>
+                    <li>@Html.ActionLink("Categories", "Index", "Categories")</li>
+                    <li>@Html.ActionLink("Customers", "Index", "Customers")</li>
+                    <li>@Html.ActionLink("Orders", "Index", "Orders")</li>
+                    <li>@Html.ActionLink("Order Items", "Index", "Order_items")</li>
+                    <li>@Html.ActionLink("Products", "Index", "Products")</li>
+                    <li>@Html.ActionLink("Staffs", "Index", "Staffs")</li>
+                    <li>@Html.ActionLink("Stocks", "Index", "Stocks")</li>
+                    <li>@Html.ActionLink("Stores", "Index", "Stores")</li>
+                    <li>@Html.ActionLink("Vendors", "Index", "Vendors")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Shree Ganesh Bartan Bhandar</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    <script>
+        function HandleStockSelection(ddl) {
+            let id = $(ddl).val();
+            $('.quantity_kg').css('border-color', 'grey');
+            $('.quantity').css('border-color', 'grey');
+            if (id > 0) {
+                $.post("/stocks/GetStockPricing", { id: id }, function (result) {
+                    console.log('result: ', result);
+
+                    if (result.MRP && result.sale_price && result.sale_discount_percentage == null) { result.sale_discount_percentage = (100 - (result.sale_price / result.MRP * 100)); }
+                    if (result.MRP && result.sale_price == null && result.sale_discount_percentage) { result.sale_discount_percentage = (result.MRP - (result.sale_discount_percentage * result.MRP / 100)); }
+
+                    if (result.MRP) {
+                        $('#lbl_mrp').html(result.MRP);
+                    }
+                    if (result.sale_discount_percentage) {
+                        $('#sale_discount_percentage').html(result.sale_discount_percentage);
+                    }
+                    if (result.sale_price) {
+                        $('#lbl_sale_price').html(result.sale_price);
+                        $('.list_price').val(result.sale_price);
+                    }
+                    if (result.is_per_kg_item) {
+                        $('.quantity_kg').css('border-color', 'green');
+                    } else { $('.quantity').css('border-color', 'green');}
+                });
+            } else {
+                $('#lbl_mrp').html('N/A');
+                $('#sale_discount_percentage').html('N/A');
+                $('#lbl_sale_price').html('N/A');
+                $('.list_price').val('');
+            }
+        }
+
+        function SetTotalAmount() {
+            let total = 0;
+            let list_price = $('.list_price').val();
+            let discount = $('.discount').val();
+            let quantity = $('.quantity').val();
+            let quantity_kg = $('.quantity_kg').val();
+
+            if (!list_price) { list_price = 0; }
+            if (!discount) { discount = 0; }
+            if (!quantity) { quantity = 0; }
+            if (!quantity_kg) { quantity_kg = 0; }
+
+            if (quantity_kg > 0) { total = (list_price * quantity_kg) - discount; }
+            else { total = (list_price * quantity) - discount; }
+            $('#lbl_total_amount').html(total);
+        }
+    </script>
+</body>
+</html>

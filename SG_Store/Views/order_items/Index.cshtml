@@ -1,0 +1,69 @@
+﻿@model IEnumerable<SG_Store.Models.order_items>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.quantity_kg)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.list_price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.discount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.total_amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.order.order_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.stock.product.product_name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.quantity)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.quantity_kg)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.list_price)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.discount)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.total_amount)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.order.order_id)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.stock.product.product_name)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.order_item_id }) |
+        @Html.ActionLink("Details", "Details", new { id = item.order_item_id }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.order_item_id })
+    </td>
+</tr>
+}
+
+</table>
